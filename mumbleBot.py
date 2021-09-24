@@ -396,7 +396,8 @@ class MumbleBot:
         self.pcm_buffer_size = 960 * channels
 
         command = ("ffmpeg", '-v', ffmpeg_debug, '-nostdin', '-i',
-                   uri, '-ss', f"{start_from:f}", '-ac', str(channels), '-f', 's16le', '-ar', '48000', '-')
+                   uri, '-ss', f"{start_from:f}", '-ac', str(channels), '-f', 's16le', '-ar', '48000',
+                   '-filter:a', 'volume=replaygain=track, loudnorm', '-')
         self.log.debug("bot: execute ffmpeg command: " + " ".join(command))
 
         # The ffmpeg process is a thread
